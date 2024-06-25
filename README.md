@@ -1,34 +1,47 @@
 # Spigo.Estoque
 
-Este é um projeto de gerenciamento de estoque usando Python e Tkinter. Ele permite adicionar e remover produtos, visualizar o estoque e atualizar os dados em tempo real.
-
-## Funcionalidades
-
-- Adicionar produtos ao estoque
-- Remover produtos do estoque
-- Visualizar o estoque atual
-- Atualizar dados do estoque em tempo real
+Spigo.Estoque é um aplicativo de gerenciamento de estoque desenvolvido em Flask. Ele permite adicionar e remover produtos do estoque através de uma interface web.
 
 ## Instalação
 
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/IanSpigote/Spigo.Estoque.git
 
-2.Navegue até o diretório do projeto:
+    ```bash
+    git clone https://github.com/IanSpigote/Spigo.Estoque.git
+    ```
+
+2. Navegue até o diretório do projeto:
+
+    ```bash
     cd Spigo.Estoque
+    ```
 
-3.Instale as dependências:
+3. Instale as dependências:
+
+    ```bash
     pip install -r requirements.txt
+    ```
+
+4. Inicie o servidor Flask:
+
+    ```bash
+    python app.py
+    ```
+
+5. Abra o navegador e acesse:
+
+    ```plaintext
+    http://127.0.0.1:5000/
+    ```
 
 ## Uso
 
-Para iniciar a aplicação, execute:
-    python app.py
+Na interface web, você pode adicionar e remover produtos do estoque usando os formulários fornecidos.
 
 ## Contribuição
-Sinta-se à vontade para contribuir com o projeto. Você pode fazer isso através de pull requests ou abrindo issues para relatar problemas ou sugerir melhorias.
+
+Se desejar contribuir para este projeto, sinta-se à vontade para fazer um fork do repositório e enviar pull requests.
 
 ## Licença
-Este projeto está licenciado sob a MIT License.
 
+Este projeto está licenciado sob a licença MIT.
