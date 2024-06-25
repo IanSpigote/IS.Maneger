@@ -1,10 +1,10 @@
 import json
 import csv
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Função para carregar os dados do arquivo JSON
+# Função para carregar os dados do JSON
 def carregar_dados():
     try:
         with open('dados.json', 'r') as file:
@@ -12,83 +12,73 @@ def carregar_dados():
     except FileNotFoundError:
         return {}
 
-# Função para salvar os dados no arquivo JSON
+# Função para salvar os dados no JSON
 def salvar_dados(dados):
     with open('dados.json', 'w') as file:
         json.dump(dados, file)
-    salvar_tabela_csv(dados)
 
-# Função para salvar os dados em um arquivo CSV
-def salvar_tabela_csv(dados):
-    with open('estoque.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(["Produto", "Quantidade"])
-        for produto, quantidade in dados.items():
-            writer.writerow([produto, quantidade])
+# Função para carregar os dados do CSV para o dicionário `estoque`
+def carregar_estoque_from_csv():
+    global estoque
+    estoque = {}
+    with open('estoque.csv', mode='r', newline='') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            produto = row['produto']
+            quantidade = int(row['quantidade'])
+            estoque[produto] = quantidade
 
-# Carregar os dados ao iniciar
-estoque = carregar_dados()
+# Função para salvar o dicionário `estoque` de volta ao CSV
+def salvar_estoque_to_csv():
+    with open('estoque.csv', mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=['produto', 'quantidade'])
+        writer.writeheader()
+        for produto, quantidade in estoque.items():
+            writer.writerow({'produto': produto, 'quantidade': quantidade})
 
+# Rota para a página inicial que renderiza o template index.html
 @app.route('/')
 def index():
-    return render_template_string('''
-        <!doctype html>
-        <html>
-            <head>
-                <title>Spigo.Estoque</title>
-            </head>
-            <body>
-                <h1>Estoque</h1>
-                <ul>
-                {% for produto, quantidade in estoque.items() %}
-                    <li>{{ produto }}: {{ quantidade }}</li>
-                {% endfor %}
-                </ul>
-                <form action="/processar_comando" method="post">
-                    <label for="comando">Comando (quantidade produto):</label>
-                    <input type="text" id="comando" name="comando">
-                    <input type="radio" id="adicionar" name="modo" value="Adicionar" checked>
-                    <label for="adicionar">Adicionar</label>
-                    <input type="radio" id="remover" name="modo" value="Remover">
-                    <label for="remover">Remover</label>
-                    <button type="submit">Executar</button>
-                </form>
-            </body>
-        </html>
-    ''', estoque=estoque)
+    carregar_estoque_from_csv()
+    return render_template('index.html', estoque=estoque)
 
-@app.route('/processar_comando', methods=['POST'])
-def processar_comando():
-    comando_texto = request.form['comando']
-    modo = request.form['modo']
-    try:
-        quantidade, produto = comando_texto.split(' ', 1)
-        quantidade = int(quantidade)
-    except ValueError:
-        return jsonify({'erro': 'Comando inválido!'}), 400
-
-    if modo == "Adicionar":
-        adiciona(produto, quantidade)
-    elif modo == "Remover":
-        remove(produto, quantidade)
+# Rota para adicionar ou remover produtos do estoque
+@app.route('/atualizar', methods=['POST'])
+def atualizar_estoque():
+    comando = request.form['comando']
     
-    return index()
+    # Interpretar o comando
+    partes = comando.split(maxsplit=2)
+    if len(partes) != 3:
+        return "Comando inválido. Use 'Adicionar 2 morango' ou 'Remover 2 pistache'."
 
-def adiciona(produto, quantidade):
-    if produto in estoque:
-        estoque[produto] += quantidade
+    operacao, quantidade_str, produto = partes
+    try:
+        quantidade = int(quantidade_str)
+    except ValueError:
+        return "Quantidade inválida. Use um número inteiro para a quantidade."
+
+    # Atualizar o estoque baseado na operação
+    if operacao.lower() == 'adicionar':
+        if produto in estoque:
+            estoque[produto] += quantidade
+        else:
+            estoque[produto] = quantidade
+    elif operacao.lower() == 'remover':
+        if produto in estoque:
+            estoque[produto] -= quantidade
+            if estoque[produto] < 0:
+                estoque[produto] = 0  # Evitar estoque negativo
+        else:
+            return "Produto não encontrado no estoque."
     else:
-        estoque[produto] = quantidade
+        return "Operação inválida. Use 'Adicionar' ou 'Remover'."
+
+    # Salvar as alterações no JSON e CSV
     salvar_dados(estoque)
+    salvar_estoque_to_csv()
 
-def remove(produto, quantidade):
-    if produto in estoque:
-        estoque[produto] -= quantidade
-        if estoque[produto] <= 0:
-            del estoque[produto]
-        salvar_dados(estoque)
-    else:
-        return jsonify({'erro': 'Produto não cadastrado!'}), 400
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)

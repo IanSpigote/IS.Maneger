@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spigo.Estoque</title>
+    <!-- Link para o arquivo de estilo CSS (opcional) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Spigo.Estoque</h1>
+        
+        <!-- Formulário para adicionar ou remover produtos -->
+        <form method="POST" action="{{ url_for('atualizar_estoque') }}">
+            <label for="comando">Comando:</label>
+            <input type="text" id="comando" name="comando" placeholder="Adicionar 2 morango" required>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <!-- Tabela para exibir o estoque atual -->
+        <h2>Estoque Atual</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto, quantidade in estoque.items() %}
+                <tr>
+                    <td>{{ produto }}</td>
+                    <td>{{ quantidade }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
