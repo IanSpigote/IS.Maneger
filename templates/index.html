@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spigo.Estoque</title>
+    <title>IS.stock</title>
     <!-- Link para o arquivo de estilo CSS (opcional) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Spigo.Estoque</h1>
-        
+        <h1>IS.tock</h1>
+        <h3>powered by Ian Spigote</h3>
         <!-- Formulário para adicionar ou remover produtos -->
         <form method="POST" action="{{ url_for('atualizar_estoque') }}">
-            <label for="comando">Comando:</label>
-            <input type="text" id="comando" name="comando" placeholder="Adicionar 2 morango" required>
-            <button type="submit">Enviar</button>
-        </form>
-
+            <input type="text" id="comando" name="comando" placeholder="Ex:Adicionar 2 Morango" required>
+            <button type="submit">
+                <svg width="14" height="26" viewBox="0 0 144 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M121 126H23.0004C23.0004 126 54.5 255.5 71.5004 255.5C88.5009 255.5 121 126 121 126Z" fill="#F2F2F2"/>
+                    <path d="M0.500013 81.5C1.30001 101.1 17.1667 110 25 112C43.6667 113.5 87.7 115.6 114.5 112C141.3 108.4 145 88.5 143.5 79C141.5 52.5 116.5 49 114.5 49C127.5 27.5 112.5 8.5 97.5 2.5C85.5 -2.3 81.5 2.5 81 5.5C81.1667 9.33333 79.7 17 72.5 17C65.3 17 55.5 21 51.5 23C36 31 36.5 41.5 32 49C21.5 48.5 -0.499987 57 0.500013 81.5Z" fill="#F2F2F2"/>
+                </svg>
+            </button>
+        </form >
+        <div>
         <!-- Tabela para exibir o estoque atual -->
-        <h2>Estoque Atual</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for produto, quantidade in estoque.items() %}
-                <tr>
-                    <td>{{ produto }}</td>
-                    <td>{{ quantidade }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <h2>Estoque atual</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto, quantidade in estoque.items() %}
+                    <tr>
+                        <td class="pdt">{{ produto }}</td>
+                        <td  class="qtd">{{ quantidade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

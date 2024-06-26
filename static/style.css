@@ -1,0 +1,93 @@
+body{
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #8C1B50;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container h1{
+    color: #F2F2F2;
+    font-size: 55px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 0;
+}
+
+.container h3{
+    color: #EC008C;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 0;
+}
+
+.container form{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.container form input{
+    border-style: solid;
+    border-color: #78C7D3;
+    border-right-style: none;
+    border-radius: 20px 0px 0px 20px;
+    background-color: #F2F2F2;
+    padding: 10px;
+}
+
+.container form button{
+    border-style: solid;
+    border-color: #78C7D3;
+    border-left-style: none;
+    border-radius: 0px 20px 20px 0px;
+    background-color: #F8C534;
+    padding: 5px 20px 5px 20px;
+}
+.container div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container div h2{
+    color:#F2F2F2;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    background-color:#EC008C;
+    padding: 10px 15px;
+    min-width: 250px;
+    max-width: 250px;
+    border-radius: 15px 15px 0px 0px;
+    margin-bottom: 0;
+}
+
+.container div table{
+    border: none;
+    background-color:#F2F2F2;
+    border-radius: 0px 0px 15px 15px;
+    padding: 5px 15px;
+}
+
+.container div table thead tr th{
+    font-size: 18px;
+    font-weight: 400;
+    color: #EC008C;
+    
+}
+
+.container div table tbody{
+    font-size: 16px;
+    font-weight: 500;
+    color:#78C7D3;
+    text-align: center;
+}
