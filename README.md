@@ -1,6 +1,6 @@
-# Spigo.Estoque
+# IS.Maneger
 
-Spigo.Estoque é um aplicativo de gerenciamento de estoque desenvolvido em Flask. Ele permite adicionar e remover produtos do estoque através de uma interface web.
+IS.Maneger é um aplicativo de gerenciamento de estoque desenvolvido em Flask. Ele permite adicionar e remover produtos do estoque através de uma interface web.
 
 ## Instalação
 
