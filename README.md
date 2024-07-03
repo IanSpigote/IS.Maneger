@@ -7,13 +7,13 @@ IS.Maneger é um aplicativo de gerenciamento de estoque desenvolvido em Flask. E
 1. Clone o repositório:
 
     ```bash
-    git clone https://github.com/IanSpigote/Spigo.Estoque.git
+    git clone https://github.com/IanSpigote/IS.Maneger.git
     ```
 
 2. Navegue até o diretório do projeto:
 
     ```bash
-    cd Spigo.Estoque
+    cd IS.Maneger
     ```
 
 3. Instale as dependências:
